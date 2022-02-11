@@ -1,0 +1,56 @@
+﻿<Page x:Class="ReceptiShitovaTarakanova.Pages.PageIngredient"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ReceptiShitovaTarakanova.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Список ингредиентов">
+
+    <Grid Margin="10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Label Name="LName"  FontSize="16" Content="x наименований" HorizontalAlignment="left"></Label>
+        <Label Name="LZapas" Content="Запасов в холодидьнике на сумму (руб.): NNNN" FontSize="16" HorizontalAlignment="Right"></Label>
+        <DataGrid Margin="10,0" Name="DGIngredients" AutoGenerateColumns="False" IsReadOnly="True" ColumnWidth="*" Grid.Row="1" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование ингредиента" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding FullPrice}"/>
+                <DataGridTextColumn Header="В наличии" >
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="AvailableCount"/>
+                            <Binding Path="Unit.Name" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Header="Действия">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock>
+                                    <Hyperlink Name="HLinkEdit" Foreground="Blue" Click="HLinkEdit_Click_1" >Редактировать</Hyperlink>
+                                </TextBlock>
+                                <TextBlock>
+                                    <Hyperlink Name="HLinkDel" Foreground="Red" Click="HLinkDel_Click_1" >Удалить</Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Click="BTNPervStr_Click" Width='25' Name="BTNPervStr" Content="&lt;&lt;"/>
+            <Button Click="BTNPredStr_Click" Width='25' Name="BTNPredStr" Content="&lt;"/>
+            <Label Name="LSrtIzStr" Content="X/X" VerticalAlignment="Center" FontSize="24"/>
+            <Button Width='25' Name="BTNSledStr" Content="&gt;" Click="BTNSledStr_Click"/>
+            <Button Click="BTNPoslStr_Click" Width='25' Name="BTNPoslStr" Content="&gt;&gt;"/>
+        </StackPanel>
+        <Button x:Name="BTNAdd" Grid.Row="2" HorizontalAlignment="Right" Click="BTNAdd_Click">Добавить ингредиент</Button>
+    </Grid>
+</Page>
